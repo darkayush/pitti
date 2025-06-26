@@ -8,7 +8,7 @@ import Footer from './Components/Footer';
 const App = () => {
   return (
     <LenisScroll>
-      <div className='"flex-grow mt-10"'>
+      <div className="flex-grow">
         <BrowserRouter>
           <Navbar />
           <Routes>
