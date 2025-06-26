@@ -16,9 +16,13 @@ export default function PittiFooter() {
     return (
         <div className="w-full">
             {/* Newsletter Subscription Section */}
-            <div className="bg-gray-100 py-12">
+            
+
+            {/* Main Footer */}
+            <footer className="bg-slate-700 text-white relative overflow-hidden">
+                <div className="bg-gray-100 py-12">
                 <div className="max-w-6xl mx-auto px-4">
-                    <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12">
+                    <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 translate-y-[70%]">
                         <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
                             <div className="text-center lg:text-left">
                                 <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
@@ -58,17 +62,14 @@ export default function PittiFooter() {
                     </div>
                 </div>
             </div>
-
-            {/* Main Footer */}
-            <footer className="bg-slate-700 text-white relative overflow-hidden">
                 {/* Background decorative gear */}
-                <div className="absolute right-0 bottom-0 opacity-10">
+                <div className="absolute left-0 bottom-0 opacity-10">
                     <div className="w-96 h-96 relative">
                         <Settings size={384} className="text-white" />
                     </div>
                 </div>
 
-                <div className="relative z-10 max-w-6xl mx-auto px-4 py-12">
+                <div className="relative z-10 max-w-6xl mx-auto px-4 py-30">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                         
                         {/* Company Info */}
