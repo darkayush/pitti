@@ -1,4 +1,3 @@
-
 const Home = () => {
   return (
     <div className="bg-[url('/Home/HomeBG.jpg')] bg-cover bg-center bg-gray-100 min-h-screen">

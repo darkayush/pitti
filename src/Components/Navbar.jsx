@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Menu, X, Settings, ChevronDown, Phone, Mail, MapPin, Home, Plus, Minus, Building2, Award, Wrench, Users } from 'lucide-react';
 
-export default function PittiNavbar() {
+export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [expandedSection, setExpandedSection] = useState(null);
     const [isScrolled, setIsScrolled] = useState(false);
