@@ -56,7 +56,7 @@ const Manufacturing = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-[#c0c3c7] to-[#dedfe2] min-h-screen">
+    <div className="bg-gradient-to-r from-[#c0c3c7] to-[#dedfe2] min-h-screen pb-10">
       <div className="marginal">
         <div className="flex lg:flex-row flex-col min-h-screen">
           {/* Left Side - Map with Pointers */}

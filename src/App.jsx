@@ -11,6 +11,7 @@ import Subsidiaries from './Pages/Subsidiaries';
 import Manufacturing from './Pages/Manufacturing';
 import Products from './Pages/Products';
 import Applications from './Pages/Applications';
+import Investor from './Pages/Investor';
 
 const App = () => {
   return (
@@ -28,6 +29,7 @@ const App = () => {
           <Manufacturing/>
           <Products/>
           <Applications/>
+          <Investor/>
         </BrowserRouter>
       </div>
     <Footer/>

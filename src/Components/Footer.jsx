@@ -16,48 +16,6 @@ export default function PittiFooter() {
     return (
         <div className="w-full">
             <footer className="bg-slate-700 text-white relative overflow-hidden">
-                <div className="bg-gray-100 py-12">
-                    <div className="max-w-6xl mx-auto px-4">
-                        <div className="bg-white rounded-2xl shadow-lg p-8 md:p-12 translate-y-[70%]">
-                            <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
-                                <div className="text-center lg:text-left">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-2">
-                                        <span className="text-red-500">Subscribe</span> for the
-                                    </h2>
-                                    <p className="text-2xl md:text-3xl font-bold text-gray-800">
-                                        exclusive updates
-                                    </p>
-                                </div>
-                                <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
-                                    <input
-                                        type="email"
-                                        placeholder="Enter your Email Address"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="px-6 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent min-w-80"
-                                    />
-                                    <button
-                                        onClick={handleSubscribe}
-                                        className="bg-red-500 hover:bg-red-600 text-white px-8 py-3 rounded-full font-semibold transition-colors duration-300 whitespace-nowrap"
-                                    >
-                                        SUBSCRIBE NOW
-                                    </button>
-                                </div>
-                            </div>
-                            <div className="mt-4 text-center lg:text-right">
-                                <label className="flex items-center justify-center lg:justify-end gap-2 text-gray-600 text-sm">
-                                    <input
-                                        type="checkbox"
-                                        checked={agreed}
-                                        onChange={(e) => setAgreed(e.target.checked)}
-                                        className="w-4 h-4 text-red-500 border-gray-300 rounded focus:ring-red-500"
-                                    />
-                                    I agree to the <a href="#" className="text-red-500 hover:underline">Privacy Policy</a>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 {/* Background decorative gear */}
                 <div className="absolute left-0 bottom-0 opacity-10">
                     <div className="w-96 h-96 relative">
@@ -65,7 +23,7 @@ export default function PittiFooter() {
                     </div>
                 </div>
 
-                <div className="relative z-10 max-w-6xl mx-auto px-4 lg:py-30 py-46 ">
+                <div className="relative z-10 max-w-6xl mx-auto px-4 py-5 ">
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
                         {/* Company Info */}

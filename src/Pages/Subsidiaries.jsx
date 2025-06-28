@@ -24,7 +24,7 @@ const Subsidiaries = () => {
 
     return (
         <>
-            <div className="bg-[url('Subsidaries/bg.png')] bg-cover bg-center min-h-[50vh]">
+            <div className="bg-[url('Subsidaries/bg.png')] bg-cover bg-center min-h-[50vh] mt-10">
                 <div className="bg-gradient-to-r from-[#394153] to-transparent min-h-[50vh]">
                     <div className="marginal">
                         <div className="text-white">
