@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { Download } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 
 const InvestorResultsTable = () => {
   const [activeTab, setActiveTab] = useState('quarterly');
+  const [showConferenceDropdown, setShowConferenceDropdown] = useState(false);
+  const [activeConferenceTab, setActiveConferenceTab] = useState('invitation');
 
   // Sample data structure for different tabs
   const data = {
@@ -81,23 +83,63 @@ const InvestorResultsTable = () => {
       ]
     },
     conference: {
-      columns: ['Financial Year', 'April - June Q1', 'July - September Q2', 'October - December Q3', 'January - March Q4'],
-      rows: [
-        {
-          year: '2024 - 2025',
-          q1: { hasData: true, id: 'conf-q1-2025' },
-          q2: { hasData: true, id: 'conf-q2-2025' },
-          q3: { hasData: false, id: 'conf-q3-2025' },
-          q4: { hasData: true, id: 'conf-q4-2025' }
-        },
-        {
-          year: '2023 - 2024',
-          q1: { hasData: false, id: 'conf-q1-2024' },
-          q2: { hasData: true, id: 'conf-q2-2024' },
-          q3: { hasData: true, id: 'conf-q3-2024' },
-          q4: { hasData: true, id: 'conf-q4-2024' }
-        }
-      ]
+      invitation: {
+        columns: ['Financial Year', 'April - June Q1', 'July - September Q2', 'October - December Q3', 'January - March Q4'],
+        rows: [
+          {
+            year: '2024 - 2025',
+            q1: { hasData: true, id: 'inv-q1-2025' },
+            q2: { hasData: true, id: 'inv-q2-2025' },
+            q3: { hasData: false, id: 'inv-q3-2025' },
+            q4: { hasData: true, id: 'inv-q4-2025' }
+          },
+          {
+            year: '2023 - 2024',
+            q1: { hasData: false, id: 'inv-q1-2024' },
+            q2: { hasData: true, id: 'inv-q2-2024' },
+            q3: { hasData: true, id: 'inv-q3-2024' },
+            q4: { hasData: true, id: 'inv-q4-2024' }
+          }
+        ]
+      },
+      audio: {
+        columns: ['Financial Year', 'April - June Q1', 'July - September Q2', 'October - December Q3', 'January - March Q4'],
+        rows: [
+          {
+            year: '2024 - 2025',
+            q1: { hasData: true, id: 'audio-q1-2025' },
+            q2: { hasData: true, id: 'audio-q2-2025' },
+            q3: { hasData: true, id: 'audio-q3-2025' },
+            q4: { hasData: false, id: 'audio-q4-2025' }
+          },
+          {
+            year: '2023 - 2024',
+            q1: { hasData: true, id: 'audio-q1-2024' },
+            q2: { hasData: false, id: 'audio-q2-2024' },
+            q3: { hasData: true, id: 'audio-q3-2024' },
+            q4: { hasData: true, id: 'audio-q4-2024' }
+          }
+        ]
+      },
+      transcript: {
+        columns: ['Financial Year', 'April - June Q1', 'July - September Q2', 'October - December Q3', 'January - March Q4'],
+        rows: [
+          {
+            year: '2024 - 2025',
+            q1: { hasData: false, id: 'trans-q1-2025' },
+            q2: { hasData: true, id: 'trans-q2-2025' },
+            q3: { hasData: true, id: 'trans-q3-2025' },
+            q4: { hasData: true, id: 'trans-q4-2025' }
+          },
+          {
+            year: '2023 - 2024',
+            q1: { hasData: true, id: 'trans-q1-2024' },
+            q2: { hasData: true, id: 'trans-q2-2024' },
+            q3: { hasData: false, id: 'trans-q3-2024' },
+            q4: { hasData: true, id: 'trans-q4-2024' }
+          }
+        ]
+      }
     }
   };
 
@@ -107,6 +149,29 @@ const InvestorResultsTable = () => {
     { id: 'press', label: 'Press Release' },
     { id: 'conference', label: 'Investor Conference' }
   ];
+
+  const conferenceSubTabs = [
+    { id: 'invitation', label: 'Concall Invitation' },
+    { id: 'audio', label: 'Concall Audio' },
+    { id: 'transcript', label: 'Concall Transcript' }
+  ];
+
+  const handleTabClick = (tabId) => {
+    if (tabId === 'conference') {
+      setShowConferenceDropdown(!showConferenceDropdown);
+      if (!showConferenceDropdown) {
+        setActiveTab(tabId);
+      }
+    } else {
+      setActiveTab(tabId);
+      setShowConferenceDropdown(false);
+    }
+  };
+
+  const handleConferenceSubTabClick = (subTabId) => {
+    setActiveConferenceTab(subTabId);
+    setShowConferenceDropdown(false);
+  };
 
   const handleDownload = (itemId) => {
     console.log(`Downloading item: ${itemId}`);
@@ -134,26 +199,58 @@ const InvestorResultsTable = () => {
     );
   };
 
-  const currentData = data[activeTab];
+  const getCurrentData = () => {
+    if (activeTab === 'conference') {
+      return data.conference[activeConferenceTab];
+    }
+    return data[activeTab];
+  };
+
+  const currentData = getCurrentData();
 
   return (
     <div className="mx-auto p-6 bg-gray-100 min-h-screen">
       <div className="rounded-lg overflow-hidden">
         {/* Tab Navigation */}
-        <div className="">
+        <div className="relative">
           <div className="flex space-x-1">
             {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`px-6 py-3 rounded-t-lg font-medium transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? 'bg-teal-500 text-white border-b-2 border-red-500 transform translate-y-0'
-                    : 'bg-slate-600 text-gray-300 hover:bg-slate-500 hover:text-white'
-                }`}
-              >
-                {tab.label}
-              </button>
+              <div key={tab.id} className="relative">
+                <button
+                  onClick={() => handleTabClick(tab.id)}
+                  className={`px-6 py-3 rounded-t-lg font-medium transition-all duration-300 flex items-center gap-2 ${
+                    activeTab === tab.id
+                      ? 'bg-teal-500 text-white border-b-2 border-red-500 transform translate-y-0'
+                      : 'bg-slate-600 text-gray-300 hover:bg-slate-500 hover:text-white'
+                  }`}
+                >
+                  {tab.label}
+                  {tab.id === 'conference' && (
+                    <ChevronDown 
+                      className={`w-4 h-4 transition-transform duration-200 ${
+                        showConferenceDropdown ? 'rotate-180' : ''
+                      }`}
+                    />
+                  )}
+                </button>
+                
+                {/* Conference Dropdown */}
+                {tab.id === 'conference' && showConferenceDropdown && (
+                  <div className="absolute top-full left-0 mt-1 bg-teal-500 rounded-b-lg shadow-lg z-10 min-w-[200px]">
+                    {conferenceSubTabs.map((subTab) => (
+                      <button
+                        key={subTab.id}
+                        onClick={() => handleConferenceSubTabClick(subTab.id)}
+                        className={`block w-full px-4 py-2 text-left text-white hover:bg-teal-600 transition-colors duration-200 ${
+                          activeConferenceTab === subTab.id ? 'bg-teal-600' : ''
+                        }`}
+                      >
+                        {subTab.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
             ))}
           </div>
         </div>

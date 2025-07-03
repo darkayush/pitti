@@ -8,16 +8,10 @@ import ReadMoreButton from '../Components/ReadMoreButton';
 const BOD = () => {
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [activeTab, setActiveTab] = useState('board'); // 'board' or 'management'
 
-    // Updated directors array with 5 directors as shown in the image
-    const directors = [
-        {
-            id: 1,
-            image: "BOD/2.png",
-            name: "Akshay S Pitti",
-            position: "MD & CEO",
-            description: "Akshay S Pitti has been an integral part of the Company's leadership since October 2004, serving as a Whole-Time Director and now holding the position of MD & CEO."
-        },
+    // Board of Directors data (removed Akshay as he's already shown above)
+    const boardDirectors = [
         {
             id: 2,
             image: "BOD/3.png",
@@ -48,13 +42,52 @@ const BOD = () => {
         }
     ];
 
+    // Dummy Senior Management Personnel data
+    const seniorManagement = [
+        {
+            id: 6,
+            image: "BOD/dummy1.png",
+            name: "Rajesh Kumar",
+            position: "Chief Financial Officer",
+            description: "Rajesh Kumar brings over 15 years of experience in financial management and strategic planning. He has been instrumental in driving the company's financial growth and operational efficiency."
+        },
+        {
+            id: 7,
+            image: "BOD/dummy2.png",
+            name: "Priya Sharma",
+            position: "Head of Operations",
+            description: "Priya Sharma is a dynamic operations leader with extensive experience in manufacturing processes, quality control, and supply chain management across multiple industries."
+        },
+        {
+            id: 8,
+            image: "BOD/dummy3.png",
+            name: "Vikram Singh",
+            position: "Chief Technology Officer",
+            description: "Vikram Singh leads the technology initiatives with over 18 years of experience in innovation, R&D, and digital transformation in the manufacturing sector."
+        },
+        {
+            id: 9,
+            image: "BOD/dummy4.png",
+            name: "Anita Gupta",
+            position: "Head of Human Resources",
+            description: "Anita Gupta is responsible for talent acquisition, employee development, and organizational culture with more than 12 years of experience in HR leadership roles."
+        }
+    ];
+
+    // Get current data based on active tab
+    const getCurrentData = () => {
+        return activeTab === 'board' ? boardDirectors : seniorManagement;
+    };
+
+    const currentData = getCurrentData();
+
     const nextSlide = (e) => {
         e.preventDefault();
         e.stopPropagation();
         if (isAnimating) return;
         setIsAnimating(true);
         setCurrentIndex((prevIndex) => 
-            prevIndex === directors.length - 1 ? 0 : prevIndex + 1
+            prevIndex === currentData.length - 1 ? 0 : prevIndex + 1
         );
         setTimeout(() => setIsAnimating(false), 500);
     };
@@ -65,7 +98,7 @@ const BOD = () => {
         if (isAnimating) return;
         setIsAnimating(true);
         setCurrentIndex((prevIndex) => 
-            prevIndex === 0 ? directors.length - 1 : prevIndex - 1
+            prevIndex === 0 ? currentData.length - 1 : prevIndex - 1
         );
         setTimeout(() => setIsAnimating(false), 500);
     };
@@ -77,6 +110,13 @@ const BOD = () => {
         setIsAnimating(true);
         setCurrentIndex(index);
         setTimeout(() => setIsAnimating(false), 500);
+    };
+
+    const handleTabChange = (tab) => {
+        if (tab !== activeTab) {
+            setActiveTab(tab);
+            setCurrentIndex(0); // Reset to first slide when switching tabs
+        }
     };
 
     // Animation variants for mobile carousel
@@ -102,23 +142,23 @@ const BOD = () => {
         opacity: { duration: 0.2 }
     };
 
-    const DirectorCard = ({ director, isMobile = false, isDesktop = false }) => (
+    const DirectorCard = ({ person, isMobile = false, isDesktop = false }) => (
         <div className={`flex flex-col ${isMobile ? 'w-full' : ''} ${isDesktop ? 'text-center' : ''}`}>
             <div className={`${isDesktop ? 'mb-4' : 'mb-5'} ${isDesktop ? 'flex justify-center' : ''}`}>
                 <img 
-                    src={director.image} 
-                    alt={director.name}
+                    src={person.image} 
+                    alt={person.name}
                     className={`${isDesktop ? 'w-48 h-48 object-cover rounded-lg' : 'w-full'}`}
                 />
             </div>
             <h1 className={`${isDesktop ? 'text-xl' : 'lg:text-3xl text-2xl'} text-[#dc3545] font-semibold ${isDesktop ? 'mb-2' : ''}`}>
-                {director.name}
+                {person.name}
             </h1>
             <h2 className={`${isDesktop ? 'text-sm text-gray-500 mb-3' : 'lg:text-xl text-lg text-[#949494] lg:mb-12 mb-5'}`}>
-                {director.position}
+                {person.position}
             </h2>
             <p className={`${isDesktop ? 'text-sm text-gray-600 mb-4 flex-grow' : 'lg:text-lg text-md text-[#949494] pb-5 flex-grow'}`}>
-                {director.description}
+                {person.description}
             </p>
             <div className={`${isDesktop ? 'flex justify-center' : ''}`}>
                 <ReadMoreButton />
@@ -225,28 +265,60 @@ const BOD = () => {
                         </motion.div>
                     </motion.div>
 
-                    {/* Desktop Layout for Other Directors - 4 in a row as per image */}
+                    {/* Tab Buttons */}
+                    <motion.div 
+                        className='flex justify-center mb-8'
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.6, delay: 0.4 }}
+                    >
+                        <div className='flex bg-gray-100 rounded-lg p-1'>
+                            <button
+                                onClick={() => handleTabChange('board')}
+                                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                                    activeTab === 'board'
+                                        ? 'bg-[#249380] text-white shadow-lg'
+                                        : 'text-gray-600 hover:text-[#249380]'
+                                }`}
+                            >
+                                Board of Directors
+                            </button>
+                            <button
+                                onClick={() => handleTabChange('management')}
+                                className={`px-6 py-3 rounded-lg font-medium transition-all duration-300 ${
+                                    activeTab === 'management'
+                                        ? 'bg-[#249380] text-white shadow-lg'
+                                        : 'text-gray-600 hover:text-[#249380]'
+                                }`}
+                            >
+                                Senior Management Personnel
+                            </button>
+                        </div>
+                    </motion.div>
+
+                    {/* Desktop Layout for Directors/Management - 4 in a row as per image */}
                     <motion.div 
                         className='hidden lg:block'
                         initial={{ opacity: 0, y: 30 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.6, delay: 0.8 }}
+                        key={activeTab} // Add key to trigger re-animation on tab change
                     >
                         <div className='grid grid-cols-4 gap-6'>
-                            {directors.slice(1).map((director, index) => (
-                                <DirectorCard key={director.id} director={director} isDesktop={true} />
+                            {currentData.map((person, index) => (
+                                <DirectorCard key={person.id} person={person} isDesktop={true} />
                             ))}
                         </div>
                     </motion.div>
 
-                    {/* Mobile Carousel for All Directors */}
+                    {/* Mobile Carousel for Directors/Management */}
                     <div className='lg:hidden mt-10'>
                         <div className='relative'>
                             {/* Carousel Container - Auto height to show all content */}
                             <div className='relative overflow-hidden'>
                                 <AnimatePresence initial={false} custom={1} mode="wait">
                                     <motion.div
-                                        key={currentIndex}
+                                        key={`${activeTab}-${currentIndex}`}
                                         custom={1}
                                         variants={slideVariants}
                                         initial="enter"
@@ -256,7 +328,7 @@ const BOD = () => {
                                         className="w-full"
                                     >
                                         <DirectorCard 
-                                            director={directors[currentIndex]} 
+                                            person={currentData[currentIndex]} 
                                             isMobile={true}
                                         />
                                     </motion.div>
@@ -296,7 +368,7 @@ const BOD = () => {
 
                             {/* Dots Indicator */}
                             <div className='flex justify-center mt-6 space-x-2'>
-                                {directors.map((_, index) => (
+                                {currentData.map((_, index) => (
                                     <motion.button
                                         key={index}
                                         onClick={(e) => goToSlide(index, e)}
